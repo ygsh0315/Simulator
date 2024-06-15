@@ -15,10 +15,11 @@ namespace Simulator
         {
             InitializeComponent();
             udpClient = new UdpClient(port); // 생성자에서 초기화
-            Task.Run(() => StartListening());
+            //Task.Run(() => StartListening());
+            StartListening();
         }
 
-        private async Task StartListening()
+        private async void StartListening()
         {
             var remoteEndPoint = new IPEndPoint(IPAddress.Any, port);
 
@@ -26,7 +27,7 @@ namespace Simulator
             {
                 var receivedResults = await udpClient.ReceiveAsync();
                 string receivedMessage = Encoding.UTF8.GetString(receivedResults.Buffer);
-                Dispatcher.Dispatch(() => UpdateLabel(receivedMessage)); // 변경된 부분
+                Dispatcher.Dispatch(() => UpdateLabel(receivedMessage));
             }
         }
 
